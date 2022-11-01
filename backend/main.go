@@ -19,6 +19,8 @@ func serveWs(rw http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/ws", serveWs)
 
+	log.Println("Starting server on port :4000")
+
 	err := http.ListenAndServe(":4000", nil)
 	if err != nil {
 		log.Fatal(err)

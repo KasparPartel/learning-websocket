@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header";
+import {useEffect, useState} from "react";
+import {connect, sendMsg} from "./api";
+import Connect from "./components/Connect";
+import Chat from "./components/Chat";
 
 function App() {
+    const [socket, setSocket] = useState(null);
+    const [username, setUsername] = useState("Kaspar");
+    const [chatHistory, setChatHistory] = useState([]);
+
+    useEffect(() => {
+        console.log(chatHistory)
+    }, [chatHistory])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+        {socket ? (
+            <Chat username={username} socket={socket} chatHistory={chatHistory} />
+        ) : (
+            <Connect setSocket={setSocket} username={username} setUsername={setUsername} chatHistory={chatHistory} setChatHistory={setChatHistory} />
+        )}
     </div>
   );
 }
